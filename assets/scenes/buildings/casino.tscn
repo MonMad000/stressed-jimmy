@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://blspb1vs0ikrp"]
+
+[ext_resource type="Texture2D" uid="uid://cm2l45bfkbtqp" path="res://assets/casitas/casino.png" id="1_u1x6e"]
+[ext_resource type="Script" uid="uid://xmgbxgtg2pke" path="res://assets/scenes/buildings/casino.gd" id="1_us2iv"]
+[ext_resource type="PackedScene" uid="uid://dbfdkxinnd4tx" path="res://assets/scenes/ui/interaction_prompt_text.tscn" id="3_v4p7f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sc2do"]
+size = Vector2(38, 50.5)
+
+[node name="Casino" type="Node2D" unique_id=571987575]
+texture_filter = 1
+script = ExtResource("1_us2iv")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1903521250]
+texture = ExtResource("1_u1x6e")
+
+[node name="InteractionPromptText" parent="." unique_id=763194174 instance=ExtResource("3_v4p7f")]
+position = Vector2(0, -36)
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=426042407]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=629351018]
+position = Vector2(0, 6.75)
+shape = SubResource("RectangleShape2D_sc2do")

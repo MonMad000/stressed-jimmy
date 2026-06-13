@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://b8hsvqa827kbh"]
+
+[ext_resource type="Texture2D" uid="uid://dv7bfp3nncefy" path="res://assets/spritesUI/interactE.png" id="1_d3ic3"]
+
+[node name="InteractionPrompt" type="Node2D" unique_id=1378732910]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=333503458]
+texture_filter = 1
+texture = ExtResource("1_d3ic3")

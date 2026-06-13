@@ -1,0 +1,19 @@
+# Godot 4
+.godot/
+
+# Export/build outputs
+export/
+exports/
+build/
+builds/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+
+# Logs
+*.log# Godot 4+ specific ignores
+.godot/
+/android/

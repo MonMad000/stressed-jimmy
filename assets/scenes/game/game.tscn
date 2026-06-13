@@ -1,0 +1,832 @@
+[gd_scene format=3 uid="uid://c2fvo18uwsk6w"]
+
+[ext_resource type="Script" uid="uid://dmupy4dwbtj2y" path="res://scripts/city.gd" id="1_7b4ci"]
+[ext_resource type="PackedScene" uid="uid://bppww8xl4w7m2" path="res://assets/scenes/player/player.tscn" id="1_djkgf"]
+[ext_resource type="PackedScene" uid="uid://bkajgb7pkvmtp" path="res://assets/scenes/buildings/pawn_shop.tscn" id="2_7b4ci"]
+[ext_resource type="PackedScene" uid="uid://dvtooy6fxbn4o" path="res://assets/scenes/buildings/shop.tscn" id="2_suxfe"]
+[ext_resource type="Texture2D" uid="uid://d0bxv58fa721t" path="res://assets/HUD/dadosNegros.png" id="3_453kb"]
+[ext_resource type="Texture2D" uid="uid://7o1r2fifcmae" path="res://assets/HUD/dados.png" id="3_bcxjq"]
+[ext_resource type="PackedScene" uid="uid://cx66lx1gw4yti" path="res://scripts/systems/debt_marker.tscn" id="3_d31sr"]
+[ext_resource type="PackedScene" uid="uid://7qd31ju2qhbx" path="res://assets/scenes/buildings/house_2.tscn" id="3_krlks"]
+[ext_resource type="PackedScene" uid="uid://2y8suhqfr25n" path="res://assets/scenes/buildings/coffee.tscn" id="3_oblms"]
+[ext_resource type="PackedScene" uid="uid://blspb1vs0ikrp" path="res://assets/scenes/buildings/casino.tscn" id="4_7yykc"]
+[ext_resource type="Texture2D" uid="uid://bbnp5xdq5hgxb" path="res://assets/characters/badguy32x32.png" id="5_a667j"]
+[ext_resource type="Texture2D" uid="uid://bw14xoe7ad7iq" path="res://assets/characters/jimmy/Jimmy32x32.png" id="6_vgvx3"]
+[ext_resource type="Script" uid="uid://bgygl1g33isb4" path="res://scripts/run_state.gd" id="7_iuiwi"]
+[ext_resource type="Script" uid="uid://vwiph02tux3o" path="res://scripts/hud.gd" id="8_ab1nb"]
+[ext_resource type="FontFile" uid="uid://21vqvbbaaoad" path="res://assets/fonts/PixelOperator-Bold.ttf" id="9_cn0aj"]
+[ext_resource type="PackedScene" uid="uid://d2tk8llw7gruj" path="res://assets/scenes/buildings/phone.tscn" id="9_ou7hg"]
+[ext_resource type="Script" uid="uid://dgc722en4vm2n" path="res://assets/scenes/game/negotiation_tester.gd" id="14_twnwj"]
+[ext_resource type="Script" uid="uid://cya2pkij868x3" path="res://scripts/systems/NegotiationController.gd" id="15_m7g7k"]
+[ext_resource type="Script" uid="uid://d0jpnljy6b4gm" path="res://assets/scenes/game/negotiation_manager.gd" id="18_nl8od"]
+[ext_resource type="PackedScene" uid="uid://bb5i18ql1badh" path="res://assets/scenes/npc/loan_shark.tscn" id="20_d31sr"]
+
+[sub_resource type="Theme" id="Theme_7yykc"]
+default_font = ExtResource("9_cn0aj")
+default_font_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cn0aj"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ab1nb"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_cn0aj"]
+color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7yykc"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bcxjq"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_7yykc"]
+color = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_453kb"]
+atlas = ExtResource("3_453kb")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twnwj"]
+atlas = ExtResource("3_bcxjq")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ou7hg"]
+color = Color(1, 1, 1, 1)
+vertical = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_453kb"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1onu7"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ou7hg"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgvx3"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_djkgf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_djkgf"]
+size = Vector2(320, 7)
+
+[node name="Game" type="Node2D" unique_id=181522877]
+
+[node name="Background" type="ColorRect" parent="." unique_id=317525199]
+offset_right = 320.0
+offset_bottom = 180.0
+color = Color(0, 0, 0, 1)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=333007902]
+script = ExtResource("8_ab1nb")
+dice_sheet = ExtResource("3_453kb")
+debt_marker_scene = ExtResource("3_d31sr")
+
+[node name="HUDRoot" type="Control" parent="HUD" unique_id=2069023593]
+modulate = Color(0.8, 0.8, 0.8, 1)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_7yykc")
+
+[node name="BottomPanel" type="PanelContainer" parent="HUD/HUDRoot" unique_id=1656587356]
+layout_mode = 0
+offset_top = 90.0
+offset_right = 320.0
+offset_bottom = 180.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_cn0aj")
+
+[node name="Columns" type="HBoxContainer" parent="HUD/HUDRoot/BottomPanel" unique_id=1237518887]
+layout_mode = 2
+
+[node name="StatsPanel" type="PanelContainer" parent="HUD/HUDRoot/BottomPanel/Columns" unique_id=1508572875]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ab1nb")
+
+[node name="StatsMargin" type="MarginContainer" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel" unique_id=353715887]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="StatsRows" type="VBoxContainer" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin" unique_id=258695774]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="DebtRow" type="HBoxContainer" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows" unique_id=1082806406]
+layout_mode = 2
+
+[node name="DebtName" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows/DebtRow" unique_id=744026476]
+layout_mode = 2
+text = "DEBT"
+
+[node name="DebtValue" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows/DebtRow" unique_id=369754909]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "$500"
+horizontal_alignment = 2
+
+[node name="DebtSeparator" type="HSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows" unique_id=1655829254]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_cn0aj")
+
+[node name="CashRow" type="HBoxContainer" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows" unique_id=1054113608]
+layout_mode = 2
+
+[node name="CashName" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows/CashRow" unique_id=1070357941]
+layout_mode = 2
+text = "CASH"
+
+[node name="CashValue" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows/CashRow" unique_id=1012289958]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "$150"
+horizontal_alignment = 2
+
+[node name="CashSeparator" type="HSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows" unique_id=1438016114]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_cn0aj")
+
+[node name="DayRow" type="HBoxContainer" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows" unique_id=577613104]
+layout_mode = 2
+
+[node name="DayName" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows/DayRow" unique_id=559259921]
+layout_mode = 2
+text = "DAY"
+
+[node name="DayValue" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows/DayRow" unique_id=1918554406]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+horizontal_alignment = 2
+
+[node name="DaySeparator" type="HSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows" unique_id=712824782]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_cn0aj")
+
+[node name="ScoreRow" type="HBoxContainer" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows" unique_id=984847154]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows/ScoreRow" unique_id=1139853492]
+layout_mode = 2
+text = "SCORE"
+
+[node name="ScoreValue" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows/ScoreRow" unique_id=1453259168]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="ScoreSeparator" type="HSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows" unique_id=1881722127]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_cn0aj")
+
+[node name="ClockBox" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows" unique_id=2064664627]
+custom_minimum_size = Vector2(0, 22.045)
+layout_mode = 2
+
+[node name="TimeValue" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/StatsPanel/StatsMargin/StatsRows/ClockBox" unique_id=1040343064]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 65.0
+offset_bottom = 21.0
+theme_override_font_sizes/font_size = 16
+text = "18:30:42"
+horizontal_alignment = 1
+
+[node name="NegotiationPanel" type="PanelContainer" parent="HUD/HUDRoot/BottomPanel/Columns" unique_id=571968480]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_7yykc")
+
+[node name="NegotiationMargin" type="MarginContainer" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel" unique_id=1011620236]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="NegotiationRows" type="VBoxContainer" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin" unique_id=1965514050]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Screens" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows" unique_id=1261264612]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EmptyScreen" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens" unique_id=807465685]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BuildingInfoScreen" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens" unique_id=1629324632]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BuildingTitle" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/BuildingInfoScreen" unique_id=836333630]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 48.0
+offset_bottom = 9.0
+theme_override_font_sizes/font_size = 12
+text = "COFFEE"
+
+[node name="BuildingAction" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/BuildingInfoScreen" unique_id=2099408892]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 16.0
+offset_right = 48.0
+offset_bottom = 25.0
+text = "SMALL TALK"
+
+[node name="ProgressBorder" type="Panel" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/BuildingInfoScreen" unique_id=1768626687]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 138.0
+offset_bottom = 44.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bcxjq")
+
+[node name="ProgressText" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/BuildingInfoScreen/ProgressBorder" unique_id=715568179]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 8
+
+[node name="BuildingReward" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/BuildingInfoScreen" unique_id=502080401]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 48.0
+offset_right = 48.0
+offset_bottom = 57.0
+text = "REWARD:"
+
+[node name="CrapsScreen" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens" unique_id=1911658458]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -5.0
+offset_right = 4.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CrapsTitle" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen" unique_id=1173846630]
+layout_mode = 0
+offset_left = 62.0
+offset_right = 92.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 12
+text = "CRAPS"
+
+[node name="CrapsTitleSeparator" type="HSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen" unique_id=1285440809]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 10.0
+offset_right = 150.0
+offset_bottom = 14.0
+theme_override_styles/separator = SubResource("StyleBoxLine_7yykc")
+
+[node name="CrapsControlsText" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen" unique_id=1477457542]
+layout_mode = 0
+offset_left = 102.0
+offset_top = 4.0
+offset_right = 151.0
+offset_bottom = 11.0
+theme_override_font_sizes/font_size = 6
+text = " [W] +$10 [S] -$10"
+horizontal_alignment = 2
+
+[node name="CrapsControlsText2" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen" unique_id=167937766]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 4.0
+offset_right = 58.0
+offset_bottom = 11.0
+theme_override_font_sizes/font_size = 6
+text = "[E] ROLL [Q] LEAVE"
+vertical_alignment = 1
+
+[node name="DiceBox" type="HBoxContainer" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen" unique_id=2117080308]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 25.0
+offset_right = 57.0
+offset_bottom = 41.0
+theme_override_constants/separation = 20
+
+[node name="DieOne" type="TextureRect" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen/DiceBox" unique_id=586693907]
+layout_mode = 2
+texture = SubResource("AtlasTexture_453kb")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="DieTwo" type="TextureRect" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen/DiceBox" unique_id=1866127375]
+layout_mode = 2
+texture = SubResource("AtlasTexture_twnwj")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="CrapsRollText" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen" unique_id=1731276190]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 46.0
+offset_right = 75.0
+offset_bottom = 55.0
+text = "ROLL -- + -- = --"
+horizontal_alignment = 1
+
+[node name="VSeparator4" type="VSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen" unique_id=1197355627]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 16.0
+offset_right = 78.0
+offset_bottom = 57.0
+theme_override_styles/separator = SubResource("StyleBoxLine_ou7hg")
+
+[node name="VSeparator5" type="VSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen" unique_id=488707089]
+layout_mode = 0
+offset_left = 77.0
+offset_top = 16.0
+offset_right = 81.0
+offset_bottom = 57.0
+theme_override_styles/separator = SubResource("StyleBoxLine_ou7hg")
+
+[node name="StatusSeparator" type="HSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen" unique_id=1823969524]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 60.0
+offset_right = 150.0
+offset_bottom = 64.0
+theme_override_styles/separator = SubResource("StyleBoxLine_7yykc")
+
+[node name="CrapsStatusText" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen" unique_id=1495467320]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 61.0
+offset_right = 151.0
+offset_bottom = 73.0
+theme_override_font_sizes/font_size = 10
+text = "PRESS E TO ROLL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PotPanel" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen" unique_id=1611305744]
+anchors_preset = 0
+offset_left = 80.0
+offset_top = 13.0
+offset_right = 151.0
+offset_bottom = 61.0
+
+[node name="PotTitle" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen/PotPanel" unique_id=1096760647]
+layout_mode = 0
+offset_right = 72.0
+offset_bottom = 9.0
+text = "♣ ♥  BET ♦ ♠"
+horizontal_alignment = 1
+
+[node name="Panel" type="Panel" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen/PotPanel" unique_id=657465724]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.5
+offset_top = -12.5
+offset_right = 29.5
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_453kb")
+
+[node name="PotValue" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen/PotPanel/Panel" unique_id=112755884]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.5
+offset_top = -4.5
+offset_right = 6.5
+offset_bottom = 4.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 12
+text = "$50"
+horizontal_alignment = 1
+
+[node name="Point" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/CrapsScreen/PotPanel" unique_id=1541450536]
+layout_mode = 0
+offset_top = 38.0
+offset_right = 73.0
+offset_bottom = 47.0
+text = "POINT NONE"
+horizontal_alignment = 1
+
+[node name="NegotiationScreen" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens" unique_id=1976361188]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -5.0
+offset_right = 4.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OfferValue" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/NegotiationScreen" unique_id=1929979750]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 48.0
+offset_right = -39.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "I OFFER"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="OpponentMessage" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/NegotiationScreen" unique_id=982716671]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = 17.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "I WANT MY $500 BACK!"
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/NegotiationScreen" unique_id=1880908006]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 33.0
+offset_bottom = 33.999992
+theme_override_styles/panel = SubResource("StyleBoxFlat_1onu7")
+
+[node name="OpponentPortrait" type="TextureRect" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/NegotiationScreen/Panel" unique_id=1781711169]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_a667j")
+stretch_mode = 2
+
+[node name="Panel2" type="Panel" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/NegotiationScreen" unique_id=1359718839]
+layout_mode = 0
+offset_left = 121.0
+offset_top = 32.0
+offset_right = 153.0
+offset_bottom = 64.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1onu7")
+
+[node name="JimmyPortrait" type="TextureRect" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/NegotiationScreen/Panel2" unique_id=1700501689]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_vgvx3")
+stretch_mode = 2
+
+[node name="OptionsLabel" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/Screens/NegotiationScreen" unique_id=547807172]
+layout_mode = 0
+offset_top = 63.0
+offset_right = 154.0
+offset_bottom = 72.0
+text = "[W/S] CASH  [O] OBJ  [B] BLUFF  [L] LUCK"
+horizontal_alignment = 1
+
+[node name="ResourcesSeparator" type="HSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows" unique_id=620229503]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_7yykc")
+
+[node name="ResourcesRow" type="HBoxContainer" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows" unique_id=1410767964]
+layout_mode = 2
+
+[node name="CashResourceLabel" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/ResourcesRow" unique_id=1425341694]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "CASH $150"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/ResourcesRow" unique_id=1860037013]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_ou7hg")
+
+[node name="ObjectResourceLabel" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/ResourcesRow" unique_id=1195701562]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "OBJ 1"
+horizontal_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/ResourcesRow" unique_id=153823662]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_ou7hg")
+
+[node name="BluffResourceLabel" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/ResourcesRow" unique_id=374859976]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "BLUFF 1"
+horizontal_alignment = 1
+
+[node name="VSeparator3" type="VSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/ResourcesRow" unique_id=1451039869]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_ou7hg")
+
+[node name="RiskResourceLabel" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/NegotiationPanel/NegotiationMargin/NegotiationRows/ResourcesRow" unique_id=809443252]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "LUCK 1"
+horizontal_alignment = 1
+
+[node name="ContextPanel" type="PanelContainer" parent="HUD/HUDRoot/BottomPanel/Columns" unique_id=1130797686]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ou7hg")
+
+[node name="ContextScreens" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel" unique_id=310010610]
+layout_mode = 2
+
+[node name="DebtsScreen" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens" unique_id=1454366995]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DebtRadarTitle" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen" unique_id=987702225]
+layout_mode = 0
+offset_left = 22.0
+offset_top = -1.0
+offset_right = 76.0
+offset_bottom = 9.0
+text = "DEBT RADAR"
+horizontal_alignment = 1
+
+[node name="TitleSeparator" type="HSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen" unique_id=1212693689]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 7.0
+offset_right = 74.0
+offset_bottom = 11.0
+theme_override_styles/separator = SubResource("StyleBoxLine_7yykc")
+
+[node name="RadarArea" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen" unique_id=1564279711]
+anchors_preset = 0
+offset_top = 8.0
+offset_right = 76.0
+offset_bottom = 78.0
+
+[node name="RadarLine" type="ColorRect" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen/RadarArea" unique_id=1737583429]
+layout_mode = 0
+offset_left = 21.0
+offset_right = 22.0
+offset_bottom = 66.0
+
+[node name="FarLabel" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen/RadarArea" unique_id=1114870816]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 21.0
+offset_bottom = 10.0
+theme_override_font_sizes/font_size = 5
+text = "FAR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SoonLabel" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen/RadarArea" unique_id=714624500]
+layout_mode = 0
+offset_top = 25.0
+offset_right = 21.0
+offset_bottom = 34.0
+theme_override_font_sizes/font_size = 6
+text = "SOON"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DangerLabel" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen/RadarArea" unique_id=262525041]
+layout_mode = 0
+offset_top = 48.0
+offset_right = 21.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 12
+text = "(!)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NowZone" type="Panel" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen/RadarArea" unique_id=81665881]
+layout_mode = 0
+offset_top = 67.0
+offset_right = 76.0
+offset_bottom = 80.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_vgvx3")
+
+[node name="NowLabel" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen/RadarArea/NowZone" unique_id=849758557]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -2.0
+offset_right = 30.0
+offset_bottom = 14.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "NOW!"
+horizontal_alignment = 2
+
+[node name="DebtMarkers" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen/RadarArea" unique_id=1440946214]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 1.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NowSeparator" type="HSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen" unique_id=535495253]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 73.0
+offset_right = 74.0
+offset_bottom = 77.0
+theme_override_styles/separator = SubResource("StyleBoxLine_7yykc")
+
+[node name="DebtRadarFooter" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen" unique_id=1657159772]
+visible = false
+layout_mode = 0
+offset_left = 1.0
+offset_right = 28.0
+offset_bottom = 9.0
+text = "total"
+
+[node name="CrapsRulesScreen" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens" unique_id=1483983109]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RulesTitle" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/CrapsRulesScreen" unique_id=746616732]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 76.0
+offset_bottom = 11.0
+theme_override_font_sizes/font_size = 8
+text = "HOW TO PLAY CRAPS"
+horizontal_alignment = 1
+
+[node name="RuleLine1" type="Label" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/CrapsRulesScreen" unique_id=609846225]
+layout_mode = 0
+offset_top = 17.0
+offset_right = 76.0
+offset_bottom = 88.0
+text = "7/11 -> WIN!
+2/3/12 -> LOSE
+OTHER -> POINT
+POINT AGAIN -> WINS!
+7 -> LOSES
+♠"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TitleSeparator" type="HSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/CrapsRulesScreen" unique_id=1175775192]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 12.0
+offset_right = 72.0
+offset_bottom = 16.0
+theme_override_styles/separator = SubResource("StyleBoxLine_7yykc")
+
+[node name="City" type="Node2D" parent="." unique_id=747710720]
+script = ExtResource("1_7b4ci")
+buildings_brightness = 0.8
+
+[node name="Casino" parent="City" unique_id=571987575 instance=ExtResource("4_7yykc")]
+position = Vector2(274.615, 56)
+
+[node name="Shop" parent="City" unique_id=1748129717 instance=ExtResource("2_suxfe")]
+position = Vector2(200, 72)
+
+[node name="PawnShop" parent="City" unique_id=1642116360 instance=ExtResource("2_7b4ci")]
+position = Vector2(135, 72)
+
+[node name="House2" parent="City" unique_id=552420483 instance=ExtResource("3_krlks")]
+position = Vector2(103, 72)
+
+[node name="Coffee" parent="City" unique_id=1481693308 instance=ExtResource("3_oblms")]
+position = Vector2(48, 72)
+
+[node name="Phone" parent="City" unique_id=1039387847 instance=ExtResource("9_ou7hg")]
+position = Vector2(75.88, 76)
+
+[node name="Ground" type="Line2D" parent="." unique_id=389445609]
+position = Vector2(0, 1)
+points = PackedVector2Array(0, 87, 171.692, 87, 320, 87)
+width = 1.0
+default_color = Color(0.80784315, 0.80784315, 0.80784315, 1)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1743655679]
+offset = Vector2(160, 90)
+
+[node name="GroundBody" type="StaticBody2D" parent="." unique_id=1677306854]
+position = Vector2(160, 92)
+physics_material_override = SubResource("PhysicsMaterial_djkgf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundBody" unique_id=1920148182]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_djkgf")
+
+[node name="RunState" type="Node2D" parent="." unique_id=486799942]
+script = ExtResource("7_iuiwi")
+
+[node name="NegotiationTester" type="Node2D" parent="." unique_id=290003618]
+script = ExtResource("14_twnwj")
+
+[node name="NegotiationController" type="Node2D" parent="." unique_id=1946997614]
+script = ExtResource("15_m7g7k")
+
+[node name="NegotiationManager" type="Node2D" parent="." unique_id=372246648]
+script = ExtResource("18_nl8od")
+
+[node name="LoanShark2D" parent="." unique_id=1916110726 instance=ExtResource("20_d31sr")]
+position = Vector2(14, 80)
+
+[node name="Player" parent="." unique_id=1897551960 instance=ExtResource("1_djkgf")]
+position = Vector2(160, 50)
+up_direction = Vector2(0, 1)

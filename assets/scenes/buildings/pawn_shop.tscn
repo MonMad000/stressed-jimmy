@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bkajgb7pkvmtp"]
+
+[ext_resource type="Script" uid="uid://cf77vwopt6w0d" path="res://assets/scenes/buildings/pawn_shop.gd" id="1_7fijs"]
+[ext_resource type="Texture2D" uid="uid://dig75n3ryvjic" path="res://assets/casitas/edificios32x32.png" id="1_k0j51"]
+[ext_resource type="PackedScene" uid="uid://dbfdkxinnd4tx" path="res://assets/scenes/ui/interaction_prompt_text.tscn" id="3_e8cod"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7fijs"]
+size = Vector2(30, 30.5)
+
+[node name="PawnShop" type="Node2D" unique_id=1642116360]
+texture_filter = 1
+script = ExtResource("1_7fijs")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2071016349]
+texture = ExtResource("1_k0j51")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="InteractionPromptText" parent="." unique_id=763194174 instance=ExtResource("3_e8cod")]
+position = Vector2(0, -22)
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=104553379]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=263840939]
+position = Vector2(0, 0.75)
+shape = SubResource("RectangleShape2D_7fijs")

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bb5i18ql1badh"]
+
+[ext_resource type="Script" uid="uid://w8n51t0bnndl" path="res://assets/scenes/npc/loan_shark.gd" id="1_fudy1"]
+[ext_resource type="Texture2D" uid="uid://cujtdfr8uojkd" path="res://assets/characters/usurero.png" id="1_hxkpy"]
+[ext_resource type="PackedScene" uid="uid://dbfdkxinnd4tx" path="res://assets/scenes/ui/interaction_prompt_text.tscn" id="2_mtui1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fudy1"]
+size = Vector2(14, 16)
+
+[node name="LoanShark2D" type="Node2D" unique_id=1916110726]
+script = ExtResource("1_fudy1")
+
+[node name="InteractionPromptText" parent="." unique_id=763194174 instance=ExtResource("2_mtui1")]
+position = Vector2(0, -14)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1111851292]
+texture = ExtResource("1_hxkpy")
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=2117159923]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=937046281]
+shape = SubResource("RectangleShape2D_fudy1")

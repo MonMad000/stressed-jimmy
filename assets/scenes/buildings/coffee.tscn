@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://2y8suhqfr25n"]
+
+[ext_resource type="Texture2D" uid="uid://dig75n3ryvjic" path="res://assets/casitas/edificios32x32.png" id="1_25k2l"]
+[ext_resource type="Script" uid="uid://jeqagw45j2v8" path="res://scripts/buildings/BluffFarmBuilding.gd" id="1_jsb65"]
+[ext_resource type="PackedScene" uid="uid://dbfdkxinnd4tx" path="res://assets/scenes/ui/interaction_prompt_text.tscn" id="3_xxn31"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1xfka"]
+size = Vector2(9, 30.5)
+
+[node name="Coffee" type="Node2D" unique_id=1481693308]
+script = ExtResource("1_jsb65")
+time_cost_seconds = 0
+required_hold_seconds = 10.0
+min_cash_reward = 25
+max_cash_reward = 50
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1655857076]
+texture = ExtResource("1_25k2l")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
+[node name="InteractionPromptText" parent="." unique_id=763194174 instance=ExtResource("3_xxn31")]
+position = Vector2(0, -22)
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=1643060081]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=54798695]
+position = Vector2(-4.5, 0.75)
+shape = SubResource("RectangleShape2D_1xfka")

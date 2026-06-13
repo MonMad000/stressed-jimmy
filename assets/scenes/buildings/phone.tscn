@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://d2tk8llw7gruj"]
+
+[ext_resource type="Script" uid="uid://jeqagw45j2v8" path="res://scripts/buildings/BluffFarmBuilding.gd" id="1_kewb0"]
+[ext_resource type="Texture2D" uid="uid://dlaqga3wn0x0h" path="res://assets/casitas/phone2.png" id="1_opirb"]
+[ext_resource type="PackedScene" uid="uid://dbfdkxinnd4tx" path="res://assets/scenes/ui/interaction_prompt_text.tscn" id="2_ji6d7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kewb0"]
+size = Vector2(14, 22.5)
+
+[node name="Phone" type="Node2D" unique_id=1039387847]
+texture_filter = 1
+script = ExtResource("1_kewb0")
+building_title = "PHONE"
+building_action = "CALL SCAM"
+required_hold_seconds = 15.0
+has_cash_chance = true
+cash_chance = 0.35
+min_cash_reward = 25
+max_cash_reward = 50
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1937923466]
+texture = ExtResource("1_opirb")
+
+[node name="InteractionPromptText" parent="." unique_id=763194174 instance=ExtResource("2_ji6d7")]
+position = Vector2(0, -22)
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=1013006142]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=2026550592]
+position = Vector2(0, 0.75)
+shape = SubResource("RectangleShape2D_kewb0")

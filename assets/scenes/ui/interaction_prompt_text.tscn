@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dbfdkxinnd4tx"]
+
+[ext_resource type="FontFile" uid="uid://21vqvbbaaoad" path="res://assets/fonts/PixelOperator-Bold.ttf" id="1_8huna"]
+
+[node name="InteractionPromptText" type="Node2D" unique_id=763194174]
+
+[node name="Label" type="Label" parent="." unique_id=784157913]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -13.0
+offset_top = -7.5
+offset_right = 13.0
+offset_bottom = 1.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_8huna")
+theme_override_font_sizes/font_size = 8
+text = "PRESS E"
+horizontal_alignment = 1
+
+[node name="Triangle" type="Polygon2D" parent="." unique_id=707718828]
+position = Vector2(0, -2)
+polygon = PackedVector2Array(-4, 4, 4, 4, 0, 6)
+uv = PackedVector2Array(-216.50024, -69.000046, 34.499756, -70.000046, -98.500244, 21.999954)

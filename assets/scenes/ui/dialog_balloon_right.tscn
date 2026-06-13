@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://u1k8niffoh00"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kjibl"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+corner_detail = 3
+
+[node name="DialogBalloonRight" type="Control" unique_id=995261787]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -278.0
+offset_bottom = -163.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="." unique_id=1866418060]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kjibl")
+
+[node name="Polygon2D" type="Polygon2D" parent="Panel" unique_id=17767719]
+position = Vector2(42, 15)
+polygon = PackedVector2Array(0, 0, -2, 2, 5, 2)

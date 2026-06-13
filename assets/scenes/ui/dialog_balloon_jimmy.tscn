@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dngwaovpicjwk"]
+
+[ext_resource type="Script" uid="uid://76dvcesvm3op" path="res://dialog_balloon_jimmy.gd" id="1_fysxy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8w1ex"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+corner_detail = 3
+
+[node name="DialogBalloonJimmy" type="Control" unique_id=68869415]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1.0
+offset_bottom = 1.0
+script = ExtResource("1_fysxy")
+
+[node name="Bubble" type="PanelContainer" parent="." unique_id=1983142784]
+layout_mode = 0
+offset_right = 168.0
+offset_bottom = 29.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8w1ex")
+
+[node name="Margin" type="MarginContainer" parent="Bubble" unique_id=789278235]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="TextLabel" type="Label" parent="Bubble/Margin" unique_id=1377333451]
+layout_mode = 2
+text = "I OFFER $150 + OBJ 1"
+horizontal_alignment = 1
+
+[node name="Tail" type="Polygon2D" parent="." unique_id=170711340]
+position = Vector2(167, 29)
+polygon = PackedVector2Array(-2, 0, 0, -1, 1, -10, 4, -4, 11, 0)

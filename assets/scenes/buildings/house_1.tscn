@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://df8lodn1o1eml"]
+
+[ext_resource type="Texture2D" uid="uid://dig75n3ryvjic" path="res://assets/casitas/edificios32x32.png" id="1_vskrq"]
+
+[node name="house1" type="Node2D" unique_id=1528842613]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=98545422]
+texture = ExtResource("1_vskrq")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
