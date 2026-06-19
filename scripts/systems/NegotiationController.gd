@@ -49,21 +49,36 @@ func set_offer(cash_amount: int, objects_amount: int, bluff_amount: int, wants_l
 	current_bluff_offer = max(bluff_amount, 0)
 	use_luck = wants_luck
 
-
 func submit_offer(run_state: Node) -> Dictionary:
+	print("CONTROLLER 1 - submit_offer START")
+	
 	if is_finished:
+		print("CONTROLLER 2 - already finished")
 		return {
 			"result": "FINISHED",
 			"message": "NEGOTIATION CLOSED."
 		}
 	
+	print("CONTROLLER 3 - checking resources")
+	
 	if not _can_submit_offer(run_state):
+		print("CONTROLLER 4 - invalid resources")
 		return {
 			"result": "INVALID",
 			"message": "NOT ENOUGH RESOURCES."
 		}
 	
+	print("CONTROLLER 5 - adding time")
 	run_state.current_time_seconds += attempt_time_cost_seconds
+	
+	print("CONTROLLER 6 - before evaluate_offer")
+	print("target_debt: ", target_debt)
+	print("cash: ", current_cash_offer)
+	print("objects: ", current_objects_offer)
+	print("bluff: ", current_bluff_offer)
+	print("luck: ", use_luck)
+	print("risk: ", run_state.risk)
+	print("profile: ", opponent_profile)
 	
 	var result: Dictionary = NegotiationEngine.evaluate_offer(
 		target_debt,
@@ -75,7 +90,14 @@ func submit_offer(run_state: Node) -> Dictionary:
 		opponent_profile
 	)
 	
+	print("CONTROLLER 7 - after evaluate_offer")
+	print("RAW RESULT: ", result)
+	
 	result = _add_deal_reward_data(result)
+	
+	print("CONTROLLER 8 - after reward data")
+	print("FINAL RESULT: ", result)
+	
 	last_result = result
 	
 	if bool(result["used_luck"]):
@@ -83,15 +105,21 @@ func submit_offer(run_state: Node) -> Dictionary:
 	
 	match str(result["result"]):
 		"ACCEPT":
+			print("CONTROLLER 9 - ACCEPT")
 			_apply_accept(run_state, result)
 			run_state.add_score(int(result["score_reward"]))
 		
 		"REJECT":
+			print("CONTROLLER 10 - REJECT")
 			is_finished = true
 		
 		"COUNTER":
-			pass
+			print("CONTROLLER 11 - COUNTER")
+		
+		_:
+			print("CONTROLLER 12 - UNKNOWN RESULT: ", result["result"])
 	
+	print("CONTROLLER 13 - submit_offer END")
 	return result
 
 

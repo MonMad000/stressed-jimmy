@@ -69,11 +69,8 @@ extends CanvasLayer
 # ============================================================
 # PANEL DERECHO - CONTEXTOS
 # ============================================================
-@export var debt_marker_scene: PackedScene
 @onready var debts_screen: Control = $HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen
 @onready var craps_rules_screen: Control = $HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/CrapsRulesScreen
-@onready var debt_markers_container: Control = $HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen/RadarArea/DebtMarkers
-@onready var debt_radar_footer: Label = $HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen/DebtRadarFooter
 
 # ============================================================
 # BUILDING ACTIVE SYSTEM
@@ -81,7 +78,6 @@ extends CanvasLayer
 
 var active_building: Node = null
 var nearby_buildings: Array = []
-var debt_markers_by_id: Dictionary = {}
 
 # ============================================================
 # GODOT LIFECYCLE
@@ -106,7 +102,6 @@ func _process(_delta: float) -> void:
 func update_hud() -> void:
 	update_left_panel()
 	update_center_resources()
-	update_debt_radar()
 
 func update_left_panel() -> void:
 	debt_value.text = "$" + str(run_state.total_debt)
@@ -114,7 +109,7 @@ func update_left_panel() -> void:
 	score_value.text = str(run_state.score)
 	day_value.text = str(run_state.current_day)
 	time_value.text = run_state.format_time(run_state.current_time_seconds)
-
+	
 
 func update_center_resources() -> void:
 	cash_resource_label.text = "CASH " + str(run_state.cash)
@@ -362,159 +357,3 @@ func reset_negotiation_display(target_debt: int) -> void:
 	set_opponent_message("I WANT MY $" + str(target_debt) + " BACK!")
 	set_offer_text(0, 0, 0, false)
 	set_offer_hint("[W/S] CASH  [O] OBJ  [B] BLUFF  [L] LUCK")
-
-func update_debt_radar() -> void:
-	if not debts_screen.visible:
-		return
-	
-	if debt_marker_scene == null:
-		return
-	
-	var active_debts: Array[Dictionary] = run_state.get_active_debts()
-	var visible_debt_ids: Array[int] = []
-	
-	active_debts.sort_custom(_sort_debts_by_due_time)
-	
-	for debt in active_debts:
-		var debt_id: int = int(debt["id"])
-		visible_debt_ids.append(debt_id)
-		
-		var marker: DebtMarker = _get_or_create_debt_marker(debt)
-		var target_position: Vector2 = _get_debt_marker_position(debt)
-		
-		marker.position = marker.position.lerp(target_position, 0.18)
-		
-		var is_alert: bool = _is_debt_in_alert_zone(debt)
-		marker.set_alert(is_alert)
-		
-		var time_text: String = _get_debt_time_text(debt)
-		marker.setup(
-		debt_id,
-		str(debt["creditor_name"]),
-		int(debt["amount"])
-	)
-	
-	_remove_unused_debt_markers(visible_debt_ids)
-	
-	debt_radar_footer.text = "TOTAL $" + str(run_state.total_debt)
-func _get_or_create_debt_marker(debt: Dictionary) -> DebtMarker:
-	var debt_id: int = int(debt["id"])
-	
-	if debt_markers_by_id.has(debt_id):
-		return debt_markers_by_id[debt_id]
-	
-	var marker: DebtMarker = debt_marker_scene.instantiate() as DebtMarker
-	debt_markers_container.add_child(marker)
-	
-	marker.size = Vector2(48, 16)
-	marker.custom_minimum_size = Vector2(48, 16)
-	
-	marker.setup(
-		debt_id,
-		str(debt["creditor_name"]),
-		int(debt["amount"]),
-		_get_debt_time_text(debt)
-	)
-	
-	debt_markers_by_id[debt_id] = marker
-	
-	return marker
-
-
-func _remove_unused_debt_markers(visible_debt_ids: Array[int]) -> void:
-	var ids_to_remove: Array[int] = []
-	
-	for debt_id in debt_markers_by_id.keys():
-		if not visible_debt_ids.has(int(debt_id)):
-			ids_to_remove.append(int(debt_id))
-	
-	for debt_id in ids_to_remove:
-		var marker: Node = debt_markers_by_id[debt_id]
-		marker.queue_free()
-		debt_markers_by_id.erase(debt_id)
-
-func _get_debt_marker_position(debt: Dictionary) -> Vector2:
-	var radar_height: float = debt_markers_container.size.y
-	var radar_width: float = debt_markers_container.size.x
-	
-	var top_y: float = 4.0
-	var bottom_y: float = max(radar_height - 34.0, top_y)
-	
-	var seconds_until_due: int = _get_seconds_until_debt_due(debt)
-	var radar_window_seconds: int = 24 * 60 * 60
-	
-	var progress: float = 1.0 - clampf(
-		float(seconds_until_due) / float(radar_window_seconds),
-		0.0,
-		1.0
-	)
-	
-	var y: float = lerpf(top_y, bottom_y, progress)
-	
-	var marker_width: float = 48.0
-	var x: float = radar_width - marker_width - 2.0
-	
-	x = max(x, 0.0)
-	
-	return Vector2(x, y)
-	
-func _get_absolute_seconds(day: int, seconds: int) -> int:
-	return (day - 1) * 24 * 60 * 60 + seconds
-
-
-func _get_seconds_until_debt_due(debt: Dictionary) -> int:
-	var debt_day: int = int(debt["due_day"])
-	var debt_time: int = int(debt["due_time_seconds"])
-	
-	var current_absolute_seconds: int = _get_absolute_seconds(
-		run_state.current_day,
-		run_state.current_time_seconds
-	)
-	
-	var debt_absolute_seconds: int = _get_absolute_seconds(
-		debt_day,
-		debt_time
-	)
-	
-	return debt_absolute_seconds - current_absolute_seconds
-	
-func _get_debt_time_text(debt: Dictionary) -> String:
-	var debt_day: int = int(debt["due_day"])
-	var debt_time: int = int(debt["due_time_seconds"])
-	
-	if debt_day < run_state.current_day:
-		return "NOW"
-	
-	if debt_day == run_state.current_day and debt_time <= run_state.current_time_seconds:
-		return "NOW"
-	
-	if debt_day == run_state.current_day:
-		return _format_hour_minute(debt_time)
-	
-	return "D" + str(debt_day)
-
-
-func _format_hour_minute(total_seconds: int) -> String:
-	var hours: int = total_seconds / 3600
-	var minutes: int = (total_seconds % 3600) / 60
-	
-	return "%02d:%02d" % [hours, minutes]
-	
-func _is_debt_in_alert_zone(debt: Dictionary) -> bool:
-	var seconds_until_due: int = _get_seconds_until_debt_due(debt)
-	
-	return seconds_until_due <= 2 * 60 * 60
-
-
-func _sort_debts_by_due_time(a: Dictionary, b: Dictionary) -> bool:
-	var a_abs: int = _get_absolute_seconds(
-		int(a["due_day"]),
-		int(a["due_time_seconds"])
-	)
-	
-	var b_abs: int = _get_absolute_seconds(
-		int(b["due_day"]),
-		int(b["due_time_seconds"])
-	)
-	
-	return a_abs < b_abs

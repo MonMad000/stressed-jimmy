@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://dvtooy6fxbn4o" path="res://assets/scenes/buildings/shop.tscn" id="2_suxfe"]
 [ext_resource type="Texture2D" uid="uid://d0bxv58fa721t" path="res://assets/HUD/dadosNegros.png" id="3_453kb"]
 [ext_resource type="Texture2D" uid="uid://7o1r2fifcmae" path="res://assets/HUD/dados.png" id="3_bcxjq"]
-[ext_resource type="PackedScene" uid="uid://cx66lx1gw4yti" path="res://scripts/systems/debt_marker.tscn" id="3_d31sr"]
 [ext_resource type="PackedScene" uid="uid://7qd31ju2qhbx" path="res://assets/scenes/buildings/house_2.tscn" id="3_krlks"]
 [ext_resource type="PackedScene" uid="uid://2y8suhqfr25n" path="res://assets/scenes/buildings/coffee.tscn" id="3_oblms"]
 [ext_resource type="PackedScene" uid="uid://blspb1vs0ikrp" path="res://assets/scenes/buildings/casino.tscn" id="4_7yykc"]
@@ -113,7 +112,6 @@ color = Color(0, 0, 0, 1)
 [node name="HUD" type="CanvasLayer" parent="." unique_id=333007902]
 script = ExtResource("8_ab1nb")
 dice_sheet = ExtResource("3_453kb")
-debt_marker_scene = ExtResource("3_d31sr")
 
 [node name="HUDRoot" type="Control" parent="HUD" unique_id=2069023593]
 modulate = Color(0.8, 0.8, 0.8, 1)
@@ -705,18 +703,6 @@ theme_override_font_sizes/font_size = 16
 text = "NOW!"
 horizontal_alignment = 2
 
-[node name="DebtMarkers" type="Control" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen/RadarArea" unique_id=1440946214]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 22.0
-offset_top = 1.0
-offset_bottom = -4.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
 [node name="NowSeparator" type="HSeparator" parent="HUD/HUDRoot/BottomPanel/Columns/ContextPanel/ContextScreens/DebtsScreen" unique_id=535495253]
 layout_mode = 0
 offset_left = 2.0
@@ -809,7 +795,6 @@ position = Vector2(160, 92)
 physics_material_override = SubResource("PhysicsMaterial_djkgf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundBody" unique_id=1920148182]
-position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_djkgf")
 
 [node name="RunState" type="Node2D" parent="." unique_id=486799942]

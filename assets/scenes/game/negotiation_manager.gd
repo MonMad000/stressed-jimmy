@@ -11,7 +11,8 @@ var current_cash_offer: int = 0
 var current_objects_offer: int = 0
 var current_bluff_offer: int = 0
 var use_luck: bool = false
-
+var input_lock_time: float = 0.0
+var start_lock_time: float = 0.0
 
 func start_negotiation(
 	target_debt: int = 500,
@@ -19,7 +20,11 @@ func start_negotiation(
 	debt_id: int = -1,
 	creditor_name: String = "ROCCO"
 ) -> void:
+	if not can_start_negotiation():
+		return
+	
 	is_negotiating = true
+	input_lock_time = 0.15
 	
 	current_cash_offer = 0
 	current_objects_offer = 0
@@ -40,11 +45,16 @@ func start_negotiation(
 	_update_offer_display()
 
 func _ready() -> void:
-	start_negotiation(500, NegotiationEngine.OpponentProfile.NORMAL)
+	pass
+	#start_negotiation(500, NegotiationEngine.OpponentProfile.NORMAL)
 func _process(_delta: float) -> void:
+	if start_lock_time > 0.0:
+		start_lock_time -= _delta
 	if not is_negotiating:
 		return
-	
+	if input_lock_time > 0.0:
+		input_lock_time -= _delta
+		return
 	if Input.is_action_just_pressed("bet_up"):
 		_increase_cash_offer()
 	
@@ -61,6 +71,7 @@ func _process(_delta: float) -> void:
 		_toggle_luck_offer()
 	
 	if Input.is_action_just_pressed("interact"):
+		print("INTERACT DETECTED INSIDE NEGOTIATION")
 		_submit_offer()
 	
 	if Input.is_action_just_pressed("cancel"):
@@ -115,6 +126,11 @@ func _toggle_luck_offer() -> void:
 
 
 func _submit_offer() -> void:
+	print("SUBMIT OFFER CALLED")
+	print("Offer cash: ", current_cash_offer)
+	print("Offer obj: ", current_objects_offer)
+	print("Offer bluff: ", current_bluff_offer)
+	print("Use luck: ", use_luck)
 	negotiation_controller.set_offer(
 		current_cash_offer,
 		current_objects_offer,
@@ -143,8 +159,13 @@ func _submit_offer() -> void:
 
 
 func _end_negotiation(final_message: String) -> void:
+	print("END NEGOTIATION CALLED: ", final_message)
+	
 	is_negotiating = false
+	start_lock_time = 0.25
+	
 	hud.set_opponent_message(final_message)
+	hud.set_offer_hint("[E] TALK")
 	
 	# Por ahora no salimos automáticamente de la pantalla.
 	# Dejamos el mensaje visible para leerlo.
@@ -170,7 +191,7 @@ func start_negotiation_for_creditor(
 		hud.set_opponent_message("YOU DON'T OWE ME.")
 		hud.set_offer_text(0, 0, 0, false)
 		hud.set_offer_hint("[Q] LEAVE")
-		is_negotiating = true
+		is_negotiating = false
 		return
 	
 	var debt_amount: int = int(debt["amount"])
@@ -183,3 +204,5 @@ func start_negotiation_for_creditor(
 		debt_id,
 		real_creditor_name
 	)
+func can_start_negotiation() -> bool:
+	return not is_negotiating and start_lock_time <= 0.0

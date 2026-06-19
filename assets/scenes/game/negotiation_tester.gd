@@ -6,8 +6,8 @@ extends Node
 var errors_found: int = 0
 
 
-func _ready() -> void:
-	run_all_negotiation_tests()
+#afunc _ready() -> void:
+	#run_all_negotiation_tests()
 
 
 func run_all_negotiation_tests() -> void:

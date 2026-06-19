@@ -33,10 +33,16 @@ func _process(delta: float) -> void:
 	_update_prompt_blink(delta)
 	
 	if Input.is_action_just_pressed("interact"):
+		if not negotiation_manager.can_start_negotiation():
+			return
+		
 		start_negotiation()
 
 
 func start_negotiation() -> void:
+	if not negotiation_manager.can_start_negotiation():
+		return
+	
 	interaction_prompt.visible = false
 	
 	negotiation_manager.start_negotiation_for_creditor(

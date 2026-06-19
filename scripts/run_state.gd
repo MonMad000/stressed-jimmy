@@ -3,7 +3,7 @@ extends Node2D
 const DEBT_STATUS_ACTIVE: String = "ACTIVE"
 const DEBT_STATUS_RESOLVED: String = "RESOLVED"
 
-var cash: int = 150
+var cash: int = 550
 var total_debt: int = 500
 var score: int = 0
 var current_day: int = 1
