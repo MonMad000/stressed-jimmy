@@ -15,7 +15,6 @@
 [ext_resource type="Script" uid="uid://vwiph02tux3o" path="res://scripts/hud.gd" id="8_ab1nb"]
 [ext_resource type="FontFile" uid="uid://21vqvbbaaoad" path="res://assets/fonts/PixelOperator-Bold.ttf" id="9_cn0aj"]
 [ext_resource type="PackedScene" uid="uid://d2tk8llw7gruj" path="res://assets/scenes/buildings/phone.tscn" id="9_ou7hg"]
-[ext_resource type="Script" uid="uid://dgc722en4vm2n" path="res://assets/scenes/game/negotiation_tester.gd" id="14_twnwj"]
 [ext_resource type="Script" uid="uid://cya2pkij868x3" path="res://scripts/systems/NegotiationController.gd" id="15_m7g7k"]
 [ext_resource type="Script" uid="uid://d0jpnljy6b4gm" path="res://assets/scenes/game/negotiation_manager.gd" id="18_nl8od"]
 [ext_resource type="PackedScene" uid="uid://bb5i18ql1badh" path="res://assets/scenes/npc/loan_shark.tscn" id="20_d31sr"]
@@ -799,9 +798,6 @@ shape = SubResource("RectangleShape2D_djkgf")
 
 [node name="RunState" type="Node2D" parent="." unique_id=486799942]
 script = ExtResource("7_iuiwi")
-
-[node name="NegotiationTester" type="Node2D" parent="." unique_id=290003618]
-script = ExtResource("14_twnwj")
 
 [node name="NegotiationController" type="Node2D" parent="." unique_id=1946997614]
 script = ExtResource("15_m7g7k")

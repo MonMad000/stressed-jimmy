@@ -71,7 +71,6 @@ func _process(_delta: float) -> void:
 		_toggle_luck_offer()
 	
 	if Input.is_action_just_pressed("interact"):
-		print("INTERACT DETECTED INSIDE NEGOTIATION")
 		_submit_offer()
 	
 	if Input.is_action_just_pressed("cancel"):
@@ -126,11 +125,6 @@ func _toggle_luck_offer() -> void:
 
 
 func _submit_offer() -> void:
-	print("SUBMIT OFFER CALLED")
-	print("Offer cash: ", current_cash_offer)
-	print("Offer obj: ", current_objects_offer)
-	print("Offer bluff: ", current_bluff_offer)
-	print("Use luck: ", use_luck)
 	negotiation_controller.set_offer(
 		current_cash_offer,
 		current_objects_offer,
@@ -155,21 +149,49 @@ func _submit_offer() -> void:
 	
 	if str(result["result"]) == "COUNTER":
 		use_luck = false
+		hud.set_offer_hint(_get_counter_hint(result))
 		_update_offer_display()
-
+		return
+		
+func _get_counter_hint(result: Dictionary) -> String:
+	var counter_type: String = str(result["counter_type"])
+	var counter_amount: int = int(result["counter_amount"])
+	
+	match counter_type:
+		"CASH":
+			var needed_cash: int = current_cash_offer + counter_amount
+			
+			if needed_cash > run_state.cash:
+				return "NEED $" + str(needed_cash) + " - [Q] LEAVE"
+			
+			return "[W/S] ADD CASH  [E] OFFER  [Q] LEAVE"
+		
+		"OBJECT":
+			if current_objects_offer >= run_state.objects:
+				return "NEED OBJECT - [Q] LEAVE"
+			
+			return "[O] ADD OBJECT  [E] OFFER  [Q] LEAVE"
+		
+		"BLUFF":
+			if current_bluff_offer >= run_state.bluff:
+				return "NEED BLUFF - [Q] LEAVE"
+			
+			return "[B] ADD BLUFF  [E] OFFER  [Q] LEAVE"
+		
+		_:
+			return "[E] OFFER  [Q] LEAVE"
 
 func _end_negotiation(final_message: String) -> void:
-	print("END NEGOTIATION CALLED: ", final_message)
-	
 	is_negotiating = false
 	start_lock_time = 0.25
 	
 	hud.set_opponent_message(final_message)
 	hud.set_offer_hint("[E] TALK")
 	
-	# Por ahora no salimos automáticamente de la pantalla.
-	# Dejamos el mensaje visible para leerlo.
-	# Más adelante podemos volver al HUD normal con un delay.
+	await get_tree().create_timer(1.5).timeout
+	
+	if not is_negotiating:
+		hud.show_empty_screen()
 
 
 func _update_offer_display() -> void:
